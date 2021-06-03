@@ -1,0 +1,47 @@
+---
+- name: Generate the HTPasswd file
+  htpasswd:
+    path: /tmp/ocp-htpasswd
+    name: "{{ item.key }}"
+    password: "{{ item.value }}"
+    state: present
+  loop: "{{ htpasswd_users | dict2items }}"
+  no_log: true
+
+- name: Create the HTPasswd secret
+  kubernetes.core.k8s:
+    kubeconfig: "{{ install_dir }}/auth/kubeconfig"
+    host: "https://api.{{ cluster_name }}.{{ sanitized_base_domain }}:6443"
+    state: present
+    definition: "{{ lookup('template', 'htpasswd_secret.yaml.j2') | from_yaml }}"
+
+- name: Create the HTPasswd OAuth CR
+  kubernetes.core.k8s:
+    kubeconfig: "{{ install_dir }}/auth/kubeconfig"
+    host: "https://api.{{ cluster_name }}.{{ sanitized_base_domain }}:6443"
+    state: present
+    definition: "{{ lookup('template', 'htpasswd_oauth.yaml.j2') | from_yaml }}"
+
+- name: Create OpenShift Pipelines Operator Subscription
+  kubernetes.core.k8s:
+    kubeconfig: "{{ install_dir }}/auth/kubeconfig"
+    host: "https://api.{{ cluster_name }}.{{ sanitized_base_domain }}:6443"
+    state: present
+    definition: "{{ lookup('template', 'tekton_subscription.yaml.j2') | from_yaml }}"
+  when: pipelines_operator | bool
+  
+- name: Create OpenShift GitOps Operator Subscription
+  kubernetes.core.k8s:
+    kubeconfig: "{{ install_dir }}/auth/kubeconfig"
+    host: "https://api.{{ cluster_name }}.{{ sanitized_base_domain }}:6443"
+    state: present
+    definition: "{{ lookup('template', 'argocd_subscription.yaml.j2') | from_yaml }}"
+  when: gitops_operator | bool
+
+- name: Configure Serverless
+  include_tasks: serverless.yaml
+  when: serverless_operator | bool
+
+- name: Configure OpenShift Container Storage
+  include_tasks: ocs.yaml
+  when: ocs_operator | bool

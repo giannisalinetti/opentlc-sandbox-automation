@@ -1,0 +1,38 @@
+apiVersion: v1
+baseDomain: {{ sanitized_base_domain }}
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
+  name: worker
+  platform:
+    aws:
+      type: {{ worker_flavor }}
+  replicas: {{ worker_replicas }}
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  platform:
+    aws:
+      type: {{ master_flavor }}
+  replicas: 3
+metadata:
+  creationTimestamp: null
+  name: {{ cluster_name }}
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.0.0.0/16
+  networkType: {{ network_type }}
+  serviceNetwork:
+  - {{ service_network | ansible.netcommon.ipsubnet }}
+platform:
+  aws:
+    region: {{ aws_region }}
+publish: External
+fips: {{ fips_enabled }}
+pullSecret: '{{ pull_secret }}'
+sshKey: |
+  {{ ssh_key }}

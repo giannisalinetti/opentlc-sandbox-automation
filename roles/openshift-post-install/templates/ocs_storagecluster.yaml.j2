@@ -1,0 +1,64 @@
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  annotations:
+    uninstall.ocs.openshift.io/cleanup-policy: delete
+    uninstall.ocs.openshift.io/mode: graceful
+  name: ocs-storagecluster
+  namespace: openshift-storage
+  finalizers:
+    - storagecluster.ocs.openshift.io
+spec:
+  arbiter: {}
+  encryption:
+    kms: {}
+  externalStorage: {}
+  managedResources:
+    cephBlockPools: {}
+    cephConfig: {}
+    cephFilesystems: {}
+    cephObjectStoreUsers: {}
+    cephObjectStores: {}
+  nodeTopologies: {}
+  resources:
+    mds:
+      limits:
+        cpu: '3'
+        memory: 8Gi
+      requests:
+        cpu: '1'
+        memory: 8Gi
+    rgw:
+      limits:
+        cpu: '2'
+        memory: 4Gi
+      requests:
+        cpu: '1'
+        memory: 4Gi
+  storageDeviceSets:
+    - config: {}
+      resources:
+        limits:
+          cpu: '2'
+          memory: 5Gi
+        requests:
+          cpu: '1'
+          memory: 5Gi
+      placement: {}
+      name: ocs-deviceset-gp2
+      dataPVCTemplate:
+        metadata: {}
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 2Ti
+          storageClassName: gp2
+          volumeMode: Block
+        status: {}
+      count: 1
+      replica: 3
+      portable: true
+      preparePlacement: {}
+  version: 4.7.0

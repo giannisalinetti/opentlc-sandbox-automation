@@ -1,0 +1,18 @@
+---
+cluster_name: ocp4
+
+worker_flavor: m5.large
+master_flavor: m5.xlarge
+worker_replicas: 3
+aws_region: eu-central-1
+network_type: OpenShiftSDN
+service_network: 172.30.0.0/16
+fips_enabled: false
+
+pull_secret: ""
+ssh_key: ""
+aws_access_key_id: ""
+aws_secret_access_key: ""  
+
+install_dir: ~/opentlc/sandbox
+installer_path: /usr/local/bin

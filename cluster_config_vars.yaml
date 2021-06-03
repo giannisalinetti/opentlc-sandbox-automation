@@ -1,0 +1,43 @@
+---
+# Cluster name
+cluster_name: ocp4
+
+# Sizing of master nodes
+master_flavor: m5.xlarge
+
+# Sizing of worker nodes. 
+worker_flavor: m5.large
+
+# Number or worker replicas.
+worker_replicas: 3
+
+# AWS install region
+aws_region: eu-central-1
+
+# Network type. Supported values: OpenShiftSDN, OVNKubernetes
+network_type: OpenShiftSDN
+
+# The service network used top allocate service vips. To test Submariner 
+# multicluster connectivity be sure to use diffrenet CIDRs.
+service_network: 172.30.0.0/16
+
+# Enable FIPS mode
+fips_enabled: false
+
+## Post Install Configs
+# HTPasswd Users. Change passwords before installing.
+htpasswd_users:
+  developer1: RedHat123!
+  developer2: RedHat123!
+
+# Install OpenShift Pipelines Operator
+pipelines_operator: true
+
+# Install OpenShift GitOps Operator
+gitops_operator: true
+
+# Install Serverless Operator
+serverless_operator: true
+
+# Install OCS Operator
+ocs_operator: true

@@ -1,0 +1,18 @@
+---
+## Post Install Configs
+# HTPasswd Users. Change passwords before installing.
+htpasswd_users:
+  developer1: RedHat123!
+  developer2: RedHat123!
+
+# Install OpenShift Pipelines Operator
+pipelines_operator: true
+
+# Install OpenShift GitOps Operator
+gitops_operator: false
+
+# Install Serverless Operator
+serverless_operator: false
+
+# Install OCS Operator
+ocs_operator: false
