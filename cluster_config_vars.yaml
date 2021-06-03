@@ -40,4 +40,4 @@ gitops_operator: true
 serverless_operator: true
 
 # Install OCS Operator
-ocs_operator: true
+ocs_operator: false
