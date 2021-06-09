@@ -7,6 +7,14 @@ The purpose of this tool is not automate the sandbox provising (see AgnosticD fo
 to provide a simple and fast way to generate a custom install-config.yaml and AWS credential file, 
 download the necessary binaries and start the installation.
 
+After the basic cluster installation the automation can install and configure the following features:
+- HTPasswd identity provider
+- Pipelines Operator
+- GitOps Operator
+- Serverless Operator
+- Service Mesh Operator
+- OCS Operator
+
 ## Prerequisites
 Ansible 2.9+ must be installed on the system. Supported systems are Linux and macOS. 
 
@@ -136,6 +144,7 @@ cluster_name: ocp4
 master_flavor: m5.xlarge
 
 # Sizing of worker nodes.
+# This is a minimal size that fits well basic lab and demo environments.
 worker_flavor: m5.large
 
 # Number or worker replicas.
@@ -167,10 +176,16 @@ pipelines_operator: true
 gitops_operator: true
 
 # Install Serverless Operator
-serverless_operator: true
+serverless_operator: false
+
+# Install Service Mesh Operator
+# For a successful deploy the operator set worker nodes flavor to m5.xlarge or greater
+servicemesh_operator: false
 
 # Install OCS Operator
-ocs_operator: true
+# The automation will deploy 3 extra (and expensive) m5.2xlarge nodes to run
+# the OCS cluster.
+ocs_operator: false
 ```
 
 ### Debugging
