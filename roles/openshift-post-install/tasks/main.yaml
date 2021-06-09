@@ -42,6 +42,10 @@
   include_tasks: serverless.yaml
   when: serverless_operator | bool
 
+- name: Configure Service Mesh
+  include_tasks: servicemesh.yaml
+  when: servicemesh_operator | bool
+
 - name: Configure OpenShift Container Storage
   include_tasks: ocs.yaml
   when: ocs_operator | bool
