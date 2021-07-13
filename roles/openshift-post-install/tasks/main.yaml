@@ -38,6 +38,14 @@
     definition: "{{ lookup('template', 'argocd_subscription.yaml.j2') | from_yaml }}"
   when: gitops_operator | bool
 
+- name: Create ACS Operator Subscription
+  kubernetes.core.k8s:
+    kubeconfig: "{{ install_dir }}/auth/kubeconfig"
+    host: "https://api.{{ cluster_name }}.{{ sanitized_base_domain }}:6443"
+    state: present
+    definition: "{{ lookup('template', 'acs_subscription.yaml.j2') | from_yaml }}"
+  when: acs_operator | bool
+
 - name: Configure Serverless
   include_tasks: serverless.yaml
   when: serverless_operator | bool

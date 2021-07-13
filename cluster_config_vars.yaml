@@ -37,6 +37,9 @@ pipelines_operator: true
 # Install OpenShift GitOps Operator
 gitops_operator: true
 
+# Install ACS Operator
+acs_operator: false
+
 # Install Serverless Operator
 serverless_operator: false
 

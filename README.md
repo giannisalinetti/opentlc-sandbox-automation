@@ -11,6 +11,7 @@ After the basic cluster installation the automation can install and configure th
 - HTPasswd identity provider
 - Pipelines Operator
 - GitOps Operator
+- ACS Operator
 - Serverless Operator
 - Service Mesh Operator
 - OCS Operator
@@ -174,6 +175,9 @@ pipelines_operator: true
 
 # Install OpenShift GitOps Operator
 gitops_operator: true
+
+# Install ACS Operator
+acs_operator: true
 
 # Install Serverless Operator
 serverless_operator: false
